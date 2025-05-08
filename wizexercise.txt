@@ -1,0 +1,28 @@
+Overview:
+Tasky is a productivity-focused application designed to help users manage tasks efficiently and stay focused. 
+
+New Feature: Pomodoro Timer Integration
+A Pomodoro timer was added to further support user productivity through structured work and rest cycles. 
+
+Pomodoro Timer Details: 
+- Work duration: 45 minutes
+- Break Duration: 15 minutes
+
+Controls: 
+- Pause/Resume button
+- Ability to switch between break and work 
+- Visual countdown and status indicator
+
+Security Measures: 
+This application is connected to cloud-based detection systems that continuously monitor for potential security threats and unauthorized access attempts. 
+These security controls include: 
+- Audit Logging: All user actions and system events are recorded to maintain a complete history of activities within the application. 
+- Security Monitoring: Real-time monitoring systems scan for suspicious behavior, potential vulnerabilities, and known attack patterns. 
+- Threat detection: Analyze usage patterns to identify and prevent potential security breaches.
+
+Implementation of Security Controls: 
+These security measures are implemented to: 
+1. Protect personal information (e.g. email address)
+2. Ensure the integrity of the data
+3. Provide a safe and secure user experience
+4. Maintain compliance with data protection regulations

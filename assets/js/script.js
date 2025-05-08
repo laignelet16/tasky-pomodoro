@@ -4,6 +4,11 @@ clearAll = document.querySelector(".clear-btn"),
 taskBox = document.querySelector(".task-box");
 let editId,isEditTask,editStatus = false
 var userid = changeUsername();
+// pomodoro variables
+let timer;
+let isBreak = false;
+let isPaused = false;
+let timeLeft = 0;
 fetchTodos().then(data => showTodo("all",data,true));
 allTodos = "";
 filters.forEach(btn => {
@@ -245,4 +250,49 @@ async function deleteTodos(id) {
         document.write(str)
     } 
     return todos;
+}
+// pomodoro functions
+function startWork() {
+    clearInterval(timer);
+    isBreak = false;
+    isPaused = false;
+    document.body.classList.remove("break-mode");
+    startTimer(45 * 60);
+}
+
+function startBreak() {
+    clearInterval(timer);
+    isBreak = true;
+    isPaused = false;
+    document.body.classList.add("break-mode");
+    startTimer(15 * 60);
+}
+
+function startTimer(duration) {
+    timeLeft = duration;
+    updateTimerDisplay(timeLeft);
+
+    timer = setInterval(() => {
+        if(!isPaused) {
+            timeLeft--;
+            updateTimerDisplay(timeLeft);
+            if(timeLeft <= 0) {
+                clearInterval(timer);
+                alert(isBreak ? "Break's over! Back to work!" : "Work complete! Take a break!");
+            }
+        }
+    },1000);
+}
+
+function togglePause() {
+    isPaused = !isPaused;
+    const pauseBtn = document.getElementById('pause-btn');
+    pauseBtn.textContent = isPaused ? "Resume" : "Pause";
+}
+
+function updateTimerDisplay(seconds) {
+    const min = String(Math.floor(seconds/60)).padStart(2,'0');
+    const sec = String(seconds % 60).padStart(2,'0');
+    let str = min + ":" + sec;
+    document.getElementById('timer-display').textContent = str;
 }

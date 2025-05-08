@@ -1,34 +1,58 @@
 /* Import Google Font - Poppins */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tuffy:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Tuffy', sans-serif;
 }
 p {
-  background: fff;
+  background: white;
 }
 body{
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  background: #5b9fbe;
+  background: #0254EC;
 }
 ::selection{
   color: #fff;
   background: #3C87FF;
 }
+.pomodoro-timer {
+  padding-top: 10em;
+  text-align:center;
+  margin-bottom:10px;
+}
+#timer-display {
+  font-size: 5rem;
+  margin: 10px 0;
+  font-weight: bold;
+}
+.pomodoro-buttons button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+body .break-mode {
+  background-color: green;
+}
 .wrapper{
   max-width: 405px;
   padding: 28px 0 30px;
-  margin: 137px auto;
+  margin: 60px auto;
   background: #1B262C;
   border-radius: 7px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 .wrapper span {
   color:#fff
+}
+#title_list{
+  text-align: center;
+  color: white
 }
 .task-input{
   height: 52px;
@@ -47,7 +71,7 @@ body{
   font-size: 18px;
   border-radius: 5px;
   padding: 0 20px 0 53px;
-  border: 1px solid #999;
+  border: 1px solid #999999;
 }
 .task-input input:focus,
 .task-input input.active{
@@ -90,7 +114,7 @@ body{
   letter-spacing: 0.3px;
   pointer-events: none;
   transition: transform 0.25s ease;
-  background: #6a8c91;
+  background: #6a7391;
 }
 .clear-btn.active{
   opacity: 0.9;

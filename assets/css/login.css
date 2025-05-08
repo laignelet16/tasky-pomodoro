@@ -1,25 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=M+PLUS+Rounded+1c&display=swap');
 body{
-	margin: 0;
-	padding: 0;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	min-height: 100vh;
-	font-family: 'Jost', sans-serif;
-	background: #5b9fbe
+	font-family: 'Lato', sans-serif;
+	background: #3B81EB;
+	max-height: 100vh;
+	max-width: 100vw;
 }
-/*singup*/
+/*signup*/
+.container {
+	padding-top: 5em;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
 .main{
 	width: 350px;
 	height: 500px;
 	overflow: hidden;
-	background: #F4F4F2;
+	background: #d0e0fd;
 	border-radius: 10px;
-	box-shadow: 5px 20px 50px #000;
+	box-shadow: 5px 20px 50px #f6f16d00;
+	margin:auto;
 }
+
+#wand{
+	margin-top: 3em; 
+}
+
+footer {
+	padding-top: 10em;
+	text-align: center;
+}
+
 #chk{
 	display: none;
-    color: #EEEEEE;
+    color: #f5fbff;
 }
 .signup{
 	position: relative;
@@ -28,7 +42,7 @@ body{
 	
 }
 label{
-	color: #EEEEEE;
+	color: #f5fbff;
 	font-size: 2.3em;
 	justify-content: center;
 	display: flex;
@@ -50,7 +64,7 @@ label{
 input{
 	width: 60%;
 	height: 20px;
-	background: #cee0e4 ;
+	background: white ;
 	justify-content: center;
 	display: flex;
 	margin: 20px auto;
@@ -61,7 +75,7 @@ input{
 }
 /*email password içindeki yazı*/
 ::placeholder { 
-	color: #758283;
+	color: #7e8ef1;
 	opacity: 1; /* Firefox */
   }
 button{
@@ -74,7 +88,7 @@ button{
 	/*buttonm yazısı*/
 	color: #ffffff;
 	/*button background*/
-	background: #6a8c91;
+	background: #3B81EB;
 	font-size: 1em;
 	font-weight: bold;
 	margin-top: 20px;
@@ -86,18 +100,38 @@ button{
 
 }
 button:hover{
-	background: #e0dede;
+	background: #131541;
+	color: white;
 }
+
 .login{
 	height: 460px;
-	background: #1B262C;
-	border-radius: 60% / 10%;
+	background: #f6f16d;
 	transform: translateY(-180px);
 	transition: .8s ease-in-out;
+	margin: auto;
+	text-align: center;
 }
+
 .login label{
-	color: #BBE1FA;
-	transform: scale(.6);
+	padding-top: 15px;
+	color: #131541;
+	transform: scale(0.5);
+}
+
+#wand:hover {
+	animation: rotate 0.75s linear;
+}
+@keyframes rotate{
+	0%{
+		transform: rotate(0deg);
+	}
+	50%{
+		transform: rotate(45deg);
+	}
+	100% {
+		transform: rotate(0deg);
+	}
 }
 
 .signup label{
@@ -106,7 +140,7 @@ button:hover{
 }
 
 #chk:checked ~ .login{
-	transform: translateY(-500px);
+	transform: translateY(-600px);
 }
 #chk:checked ~ .login label{
 	transform: scale(1);	
