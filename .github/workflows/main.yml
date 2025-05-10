@@ -14,8 +14,6 @@ jobs:
 
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v2
-      with:
-        args: --follow-symlinks --delete --exclude '.git*/*'
       env:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
