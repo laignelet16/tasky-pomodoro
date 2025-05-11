@@ -41,6 +41,14 @@ jobs:
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         
+    - name: Set up kubeconfig
+      run: |
+        aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}
+      
     - name: Deploy to Kubernetes
+      run: |
+        kubectl apply -f private-eks-deployment.yaml
+        
+    - name: Update Kubernetes deployment with new image
       run: |
         kubectl set image deployment/private-eks private-eks=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --record
