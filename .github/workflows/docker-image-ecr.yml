@@ -85,8 +85,19 @@ jobs:
           --image-tag-mutability IMMUTABLE \
           --region us-east-2
           
-    - name: Rollout restart deployment to pull latest image
-      run: | 
-        kubectl rollout restart deployment/private-eks
+    - name: Set up kubectl
+      uses: azure/setup-kubectl@v3
+      with:
+        version: 'latest'
+  
+    - name: Update kube config
+      run: aws eks update-kubeconfig --name privateEKSCluster --region us-east-2
 
+    - name: Deploy to EKS
+      run: |
+        kubectl apply -f private-eks-deployment.yaml
+
+    
+    
         
+
