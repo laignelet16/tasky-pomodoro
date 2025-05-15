@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: private-eks
+  labels:
+    app: private-eks
+    demo: eksNodeGroup
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: private-eks
+  template:
+    metadata:
+      labels:
+        app: private-eks
+    spec:
+      containers:
+      - name: private-eks
+        image: 122610496583.dkr.ecr.us-east-2.amazonaws.com/wiz-demo-ecr:latest
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: ecr-credentials
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: private-eks
+spec:
+  type: LoadBalancer
+  selector:
+    app: private-eks
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
