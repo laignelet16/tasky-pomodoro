@@ -80,8 +80,8 @@ jobs:
 
     - name: Re-enable tag immutability
       run: | 
-        aws ecr put-image-tag-mutability \ 
-          --repository-name wiz-demo-ecr \ 
+        aws ecr put-image-tag-mutability \
+          --repository-name wiz-demo-ecr \
           --image-tag-mutability IMMUTABLE \ 
           --region us-east-2
         
