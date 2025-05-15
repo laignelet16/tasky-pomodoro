@@ -32,7 +32,7 @@ jobs:
       run: echo "IMAGE_TAG=$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
     
 
-    - name: Build, tag, and push image to Amazon ECR
+    - name: Build and push versioned image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: wiz-demo-ecr
@@ -41,14 +41,32 @@ jobs:
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         
-    - name: Set up kubeconfig
+    - name: Un-tag prevous 'latest' image (if exists)
+      env: 
+        AWS_REGION: us-east-2
+        ECR_REPOSITORY: wiz-demo-ecr
       run: |
-        aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}
-      
-    - name: Deploy to Kubernetes
+        set -e
+        IMAGE_DIGEST=$(aws ecr batch-get-image \
+          --repository-name $ECR_REPOSITORY \
+          --image-ids imageTag=latest \
+          --query 'images[0].imageID.imageDigest' \
+          --output text || true)
+
+        if [ "$IMAGE_DIGEST" != "None"] && [-n "$IMAGE_DIGEST" ]; then
+          echo "Removing 'latest' tag from digest: $IMAGE_DIGEST"
+          aws ecr batch-delete-image \
+            --repository-name $ECR_REPOSITORY \
+            --image-ids imageDigest=$IMAGE_DIGEST, imageTag=latest
+        else
+          echo "No previous 'latest' tag found."
+        fi
+    - name: Tag new image as latest and push
+      env: 
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: wiz-demo-ecr
+        IMAGE_TAG: ${{ env.IMAGE_TAG }}
       run: |
-        kubectl apply -f private-eks-deployment.yaml
-        
-    - name: Update Kubernetes deployment with new image
-      run: |
-        kubectl set image deployment/private-eks private-eks=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --record
+        docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest 
+    
