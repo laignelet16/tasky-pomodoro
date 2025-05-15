@@ -84,4 +84,9 @@ jobs:
           --repository-name wiz-demo-ecr \
           --image-tag-mutability IMMUTABLE \
           --region us-east-2
+          
+    - name: Rollout restart deployment to pull latest image
+      run: | 
+        kubectl rollout restart deployment/private-eks
+
         
