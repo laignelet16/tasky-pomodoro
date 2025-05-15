@@ -84,4 +84,3 @@ jobs:
           --image-tag-mutability IMMUTABLE \ 
           --region us-east-2
         
-    
