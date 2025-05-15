@@ -60,7 +60,7 @@ jobs:
           --query 'images[0].imageId.imageDigest' \
           --output text || true)
 
-        if [[ "$IMAGE_DIGEST" != "None"] && [-n "$IMAGE_DIGEST" ]]; then
+        if [ "$IMAGE_DIGEST" != "None" ] && [ -n "$IMAGE_DIGEST" ]; then
           echo "Removing 'latest' tag from digest: $IMAGE_DIGEST"
           aws ecr batch-delete-image \
             --repository-name $ECR_REPOSITORY \
