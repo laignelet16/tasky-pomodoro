@@ -40,7 +40,14 @@ jobs:
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        
+
+    - name: Temporarily make ECR repo mutable
+      run: |
+        aws ecr put-image-tag-mutability \
+          --repository-name wiz-demo-ecr \
+          --image-tag-mutability MUTABLE \
+          --region us-east-2
+          
     - name: Un-tag prevous 'latest' image (if exists)
       env: 
         AWS_REGION: us-east-2
@@ -50,10 +57,10 @@ jobs:
         IMAGE_DIGEST=$(aws ecr batch-get-image \
           --repository-name $ECR_REPOSITORY \
           --image-ids imageTag=latest \
-          --query 'images[0].imageID.imageDigest' \
+          --query 'images[0].imageId.imageDigest' \
           --output text || true)
 
-        if [ "$IMAGE_DIGEST" != "None"] && [-n "$IMAGE_DIGEST" ]; then
+        if [[ "$IMAGE_DIGEST" != "None"] && [-n "$IMAGE_DIGEST" ]]; then
           echo "Removing 'latest' tag from digest: $IMAGE_DIGEST"
           aws ecr batch-delete-image \
             --repository-name $ECR_REPOSITORY \
@@ -68,6 +75,13 @@ jobs:
         IMAGE_TAG: ${{ env.IMAGE_TAG }}
       run: |
         docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest 
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+
+    - name: Re-enable tag immutability
+      run: | 
+        aws ecr put-image-tag-mutability \ 
+          --repository-name wiz-demo-ecr \ 
+          --image-tag-mutability IMMUTABLE \ 
+          --region us-east-2
         
     
