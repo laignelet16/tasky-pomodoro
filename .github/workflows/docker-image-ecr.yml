@@ -82,6 +82,6 @@ jobs:
       run: | 
         aws ecr put-image-tag-mutability \
           --repository-name wiz-demo-ecr \
-          --image-tag-mutability IMMUTABLE \ 
+          --image-tag-mutability IMMUTABLE \
           --region us-east-2
         
