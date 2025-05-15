@@ -63,7 +63,7 @@ jobs:
           echo "Removing 'latest' tag from digest: $IMAGE_DIGEST"
           aws ecr batch-delete-image \
             --repository-name $ECR_REPOSITORY \
-            --image-ids imageDigest=$IMAGE_DIGEST, imageTag=latest
+            --image-ids "[{\"imageDigest\":\"$IMAGE_DIGEST\",\"imageTag\":\"latest\"}]"
         else
           echo "No previous 'latest' tag found."
         fi
